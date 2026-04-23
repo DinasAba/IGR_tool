@@ -17,13 +17,27 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 
 ## Quick Start
 
-### Reproduce Table 2 (MNIST, 90 epochs)
+### Reproduce Table 2 (MNIST, 12 epochs)
 
 ```bash
-python run_experiment.py --dataset mnist --run-all --epochs 90
+python run_experiment.py --dataset mnist --run-all --epochs 12
 ```
 
 This trains 16 models (4 adversarial methods x 4 regularizers + baseline) and evaluates each under IFIA attack. Results are saved to `results/mnist/`.
+
+### Run combined regularizers (cosine+diff_kendall, cosine+soft_spearman)
+
+```bash
+python run_experiment.py --dataset mnist --run-combo --epochs 12
+```
+
+Trains 6 additional models (AT/TRADES/MART x 2 combo regularizers) with weighted combinations of a vector-based and a rank-based regularizer. Weights default to `w1=w2=0.5` and can be overridden:
+
+```bash
+python run_experiment.py --dataset mnist --run-combo --epochs 12 --combo-w1 0.7 --combo-w2 0.3
+```
+
+Results are saved to `results/<dataset>/combo_results.json`.
 
 ### Quick test run (3 epochs, fast eval)
 
@@ -82,6 +96,9 @@ python run_experiment.py --dataset {mnist,fashion_mnist,cifar10}
     --seed N
     --eval-only          # skip training, evaluate existing checkpoint
     --run-all            # train+eval all 16 combinations
+    --run-combo          # train+eval combined regularizers (cosine+diff_kendall, cosine+soft_spearman)
+    --combo-w1 FLOAT     # weight for first (vector) regularizer in combo (default: 0.5)
+    --combo-w2 FLOAT     # weight for second (rank) regularizer in combo (default: 0.5)
     --quick              # fast eval (50 steps, 1 restart, 50 samples)
     --fast-train         # fast training (PGD steps=3)
     --lambda-igr FLOAT   # override lambda for IGR regularizer
@@ -89,65 +106,6 @@ python run_experiment.py --dataset {mnist,fashion_mnist,cifar10}
     --eval-activation    # also run activation consistency eval
     --export DIR         # output directory (default: results/)
 ```
-
-## Paper Replication Details
-
-### Hyperparameters (MNIST)
-
-| Parameter | Value | Source |
-|-----------|-------|--------|
-| Architecture | 4 conv + 3 FC | Paper Section 6 |
-| Optimizer | Adam, lr=1e-4 | Paper Section 6 |
-| Epochs | 90 | Paper Section 6 |
-| Epsilon (L-inf) | 0.3 | Paper Section 6 |
-| PGD steps (train) | 7 | Paper Appendix (Algorithm 1 structure) |
-| PGD step-size (train) | eps/4 = 0.075 | Standard practice |
-| IFIA steps (eval) | 200 | Paper Section 5 |
-| IFIA restarts | 5 | Paper Section 5 |
-| IFIA k | 100 | Paper Section 5 |
-| IG steps (eval) | 50 | Configurable |
-| Lambda IGR | 1.0 | Not specified in paper; using 1.0 as default |
-
-### Evaluation Metrics
-
-**Paper metrics (Table 2):**
-
-| Metric | Definition | Notes |
-|--------|-----------|-------|
-| Top-k intersection | \|topk(abs(IG_clean)) ∩ topk(abs(IG_adv))\| / k | k=100, measures overlap of most important features |
-| Kendall tau | Pairwise sign agreement over feature rankings | tau-a variant; ties contribute 0 (see below) |
-
-**Extension metrics (our additions for concordance comparison):**
-
-| Metric | Definition | Notes |
-|--------|-----------|-------|
-| Spearman rho | Pearson correlation of rank vectors | Exact ranking, no ties |
-| Cosine similarity | cos(IG_clean, IG_adv) | Also used as the IGR regularizer |
-| Pearson r | Pearson correlation of raw attribution vectors | Sensitive to mean shift |
-
-### Tie Handling in Kendall Tau
-
-We use **Kendall tau-a** (not tau-b):
-
-```
-tau = mean(sign(a_i - a_j) * sign(b_i - b_j))  for all pairs (i, j)
-```
-
-When values are tied (`a_i == a_j`), `sign(0) = 0`, so tied pairs contribute 0 to the sum. This is consistent with the standard tau-a definition. Tau-b adjusts the denominator for ties, but since attribution vectors are continuous (float), ties are extremely rare in practice.
-
-For efficiency, we subsample pairs (`sample_pairs=10000` by default for eval, `sample_pairs=20000` available). Subsampling introduces small variance but is necessary for large feature spaces (MNIST: 784 features = 306,936 pairs).
-
-### Differences from the Paper
-
-1. **Lambda (IGR weight):** The paper does not specify the lambda value for the IGR regularizer. We use lambda=1.0 for all methods. The paper states: "we keep the hyper-parameters the same for models with or without IGR."
-
-2. **PGD training parameters:** The paper does not explicitly state the number of PGD steps or step size used during training. We use 7 steps with step_size=eps/4 based on Algorithm 1 structure and standard practice.
-
-3. **IFIA proxy:** The paper uses cosine similarity as the differentiable proxy for the IFIA attack (justified by Theorem 1: Kendall tau upper-bounded by cosine distance). Our implementation supports both `cosine` (default, matching the paper) and `soft_topk` proxy.
-
-4. **Additional metrics:** The paper evaluates only top-k intersection and Kendall tau. We additionally compute Spearman rho, cosine similarity, and Pearson correlation for broader concordance comparison. These are clearly labeled as extensions.
-
-5. **Additional regularizers:** Beyond the paper's cosine regularizer (IGR), we implement differentiable Kendall approximation (DiffKendall), soft Spearman, and Pearson as alternative regularizers.
 
 ## Training Objectives
 
@@ -179,12 +137,12 @@ python -m pytest tests/ -v
 
 | Task | Time |
 |------|------|
-| Train 1 model (90 epochs) | ~15-30 min |
-| Train all 16 models (90 epochs) | ~4-8 hours |
+| Train 1 model (12 epochs) | ~2-4 min |
+| Train all 16 models (12 epochs) | ~30-60 min |
 | IFIA eval, 1 model (200 steps, 5 restarts) | ~10-20 min |
 | IFIA eval, 1 model (quick: 50 steps, 1 restart) | ~2-3 min |
 | Full pipeline (16 models, train+eval, quick) | ~1-2 hours |
-| Full pipeline (16 models, train+eval, 90 epochs) | ~8-12 hours |
+| Full pipeline (16 models, train+eval, 12 epochs) | ~2-3 hours |
 
 Times measured on NVIDIA GPU with ~6GB VRAM. CPU will be significantly slower.
 
@@ -197,6 +155,8 @@ results/<dataset>/
   results.tex           # LaTeX table (booktabs)
   adv_accuracy.json     # Adversarial accuracy (if --eval-adv)
   activation_consistency.json  # Activation consistency (if --eval-activation)
+  combo_results.json    # Combined regularizer metrics (if --run-combo)
+  combo_adv_accuracy.json  # Combined regularizer adv accuracy (if --run-combo --eval-adv)
 
 artifacts/
   <dataset>_<adv>_<reg>.pt   # Model checkpoints
