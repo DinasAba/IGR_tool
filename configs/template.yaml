@@ -1,0 +1,74 @@
+# ============================================================
+#  Template config — all available options with documentation
+# ============================================================
+
+seed: 123
+
+data:
+  name: mnist                # mnist | fashion_mnist | cifar10
+  batch_size: 64
+  num_workers: 2
+
+model:
+  name: mnist_cnn            # mnist_cnn | cifar10_resnet18
+
+train:
+  epochs: 10
+  lr: 0.0001                 # 1e-4 for Adam (MNIST), 0.1 for SGD (CIFAR-10)
+  optimizer: adam             # adam | sgd
+  weight_decay: 0.0          # 5e-4 for CIFAR-10 SGD
+  momentum: 0.9              # SGD only
+  lr_schedule: null           # null | step | cosine
+  lr_step_epochs: [75, 90]   # for step schedule
+  lr_gamma: 0.1              # for step schedule
+
+  # Adversarial training method
+  adv_method: at             # none | at | trades | mart
+  adv_beta: 6.0              # beta for TRADES / MART
+
+  # Save path (auto-generated if omitted)
+  save_path: null             # e.g. "artifacts/mnist_at_cosine.pt"
+
+# PGD attack during TRAINING
+attack:
+  eps: 0.3                   # L_inf perturbation budget
+  steps: 3                   # PGD steps (3 is fast, 7-10 for stronger)
+  step_size: 0.01            # PGD step size
+
+# Attribution regularizer
+igr:
+  enabled: true
+  regularizer: cosine        # cosine | pearson | diff_kendall | soft_spearman
+  lambda_igr: 1.0            # regularizer weight
+  ig_steps: 3                # IG interpolation steps (training, 3 is fast)
+  use_abs_attr: false         # use |IG| instead of IG
+
+  # DiffKendall-specific
+  diff_kendall_alpha: 20.0   # tanh steepness (higher = closer to sign)
+  diff_kendall_pairs: 5000   # number of sampled pairs
+
+  # SoftSpearman-specific
+  soft_spearman_beta: 10.0   # sigmoid steepness for soft ranking
+  soft_spearman_max_dim: 200 # max dimensions (subsampling for memory)
+
+# Evaluation
+eval:
+  n_samples: 200             # test samples to evaluate
+  only_correct: true         # only use correctly classified
+  ig_steps: 50               # high-precision IG for eval
+
+  attack:                    # IFIA attack settings (eval only)
+    eps: 0.3
+    steps: 200               # more steps for thorough attack
+    step_size: 0.01
+    restarts: 5              # mean over restarts
+    k: 100                   # top-k features
+    cls_weight: 1.0          # label preservation weight
+    proxy: cosine             # cosine | soft_topk
+    ig_steps_attack: 5       # IG steps during attack (lower = faster)
+
+metrics:
+  kendall_pairs: 10000       # pairs for Kendall tau estimation
+
+amp:
+  enabled: false             # Mixed precision (set true for modern GPU)

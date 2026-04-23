@@ -1,0 +1,68 @@
+{
+  "none": {
+    "overall": 0.0
+  },
+  "at": {
+    "overall": 0.0
+  },
+  "at+cosine": {
+    "overall": 0.0
+  },
+  "at+diff_kendall": {
+    "overall": 0.0
+  },
+  "at+soft_spearman": {
+    "overall": 0.0
+  },
+  "at+pearson": {
+    "overall": 0.0
+  },
+  "trades": {
+    "overall": 0.0
+  },
+  "trades+cosine": {
+    "overall": 0.0
+  },
+  "trades+diff_kendall": {
+    "overall": 0.0
+  },
+  "trades+soft_spearman": {
+    "overall": 0.0
+  },
+  "trades+pearson": {
+    "overall": 0.0
+  },
+  "mart": {
+    "overall": 0.0
+  },
+  "mart+cosine": {
+    "overall": 0.0
+  },
+  "mart+diff_kendall": {
+    "overall": 0.0
+  },
+  "mart+soft_spearman": {
+    "overall": 0.0
+  },
+  "mart+pearson": {
+    "overall": 0.0
+  },
+  "at+cosine+diff_kendall": {
+    "overall": 0.0
+  },
+  "at+cosine+soft_spearman": {
+    "overall": 0.0
+  },
+  "mart+cosine+diff_kendall": {
+    "overall": 0.0
+  },
+  "mart+cosine+soft_spearman": {
+    "overall": 0.0
+  },
+  "trades+cosine+diff_kendall": {
+    "overall": 0.0
+  },
+  "trades+cosine+soft_spearman": {
+    "overall": 0.0
+  }
+}

@@ -1,0 +1,70 @@
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# ============================================================
+# Virtual environments
+# ============================================================
+.venv/
+venv/
+env/
+ENV/
+
+# ============================================================
+# Testing / caches
+# ============================================================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# ============================================================
+# Project-specific (large files that must NOT go to GitHub)
+# ============================================================
+
+# Trained model checkpoints (~3 GB for full set of experiments)
+artifacts/
+*.pt
+*.pth
+*.ckpt
+
+# Raw / downloaded datasets (MedMNIST, CIFAR, MNIST are auto-downloaded)
+data/
+
+# Archived backups
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Temporary YAML configs created by run_experiment.py / interactive.py
+igr_cfg_*.yaml
+
+# ============================================================
+# Results (optional — usually fine to commit small JSON/CSV)
+# ============================================================
+# Uncomment to exclude all results (if you prefer users to regenerate):
+# results/
+
+# Keep JSON/CSV/TEX results but skip heavy artefacts inside results/
+results/**/*.png
+results/**/*.jpg
+results/**/*.pdf
+
+# ============================================================
+# IDE / OS
+# ============================================================
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini

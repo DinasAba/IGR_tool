@@ -1,0 +1,50 @@
+amp:
+  enabled: true
+attack:
+  eps: 0.1
+  step_size: 0.025
+  steps: 7
+data:
+  batch_size: 64
+  name: retinamnist
+  num_workers: 2
+eval:
+  attack:
+    cls_weight: 1.0
+    eps: 0.1
+    ig_steps_attack: 5
+    k: 100
+    proxy: cosine
+    restarts: 5
+    step_size: 0.005
+    steps: 200
+  ig_steps: 30
+  n_samples: 200
+  only_correct: true
+igr:
+  combo_w1: 0.5
+  combo_w2: 0.5
+  diff_kendall_alpha: 20.0
+  diff_kendall_pairs: 5000
+  enabled: true
+  ig_steps: 1
+  lambda_igr: 1.0
+  regularizer: soft_spearman
+  soft_spearman_beta: 10.0
+  soft_spearman_max_dim: 200
+  use_abs_attr: false
+metrics:
+  kendall_pairs: 10000
+model:
+  name: retinamnist_resnet18
+seed: 123
+train:
+  adv_beta: 6.0
+  adv_method: at
+  epochs: 32
+  grad_clip: 1.0
+  lr: 0.001
+  optimizer: adam
+  save_path: artifacts/retinamnist_at_soft_spearman.pt
+  warmup_epochs: 0
+  weight_decay: 0.0001

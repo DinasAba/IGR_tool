@@ -1,0 +1,44 @@
+seed: 123
+
+data:
+  name: mnist
+  batch_size: 64
+  num_workers: 2
+
+model:
+  name: mnist_cnn
+
+train:
+  epochs: 5
+  lr: 0.0001
+  weight_decay: 0.0
+  save_path: "artifacts/mnist_standard.pt"
+  save_path_igr: "artifacts/mnist_igr.pt"
+
+eval:
+  n_samples: 20
+  only_correct: true
+
+attack:
+  eps: 0.3
+  k: 100
+  steps: 50
+  restarts: 1
+  step_size: 0.02
+  train_steps: 3
+  train_alpha: 0.01
+  cls_weight: 1.0
+
+ig:
+  steps_eval: 30
+  steps_attack: 5
+
+igr:
+  enabled: true
+  lambda_igr: 1.0
+  ig_steps_train: 5
+  ig_steps_eval: 30
+  use_abs_attr: false
+
+metrics:
+  kendall_pairs: 5000

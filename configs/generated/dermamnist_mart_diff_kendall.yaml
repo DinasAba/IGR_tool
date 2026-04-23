@@ -1,0 +1,50 @@
+amp:
+  enabled: true
+attack:
+  eps: 0.01568627450980392
+  step_size: 0.00392156862745098
+  steps: 7
+data:
+  batch_size: 64
+  name: dermamnist
+  num_workers: 2
+eval:
+  attack:
+    cls_weight: 1.0
+    eps: 0.01568627450980392
+    ig_steps_attack: 5
+    k: 100
+    proxy: cosine
+    restarts: 5
+    step_size: 0.00196078431372549
+    steps: 200
+  ig_steps: 30
+  n_samples: 200
+  only_correct: true
+igr:
+  combo_w1: 0.5
+  combo_w2: 0.5
+  diff_kendall_alpha: 20.0
+  diff_kendall_pairs: 5000
+  enabled: true
+  ig_steps: 1
+  lambda_igr: 1.0
+  regularizer: diff_kendall
+  soft_spearman_beta: 10.0
+  soft_spearman_max_dim: 200
+  use_abs_attr: false
+metrics:
+  kendall_pairs: 10000
+model:
+  name: dermamnist_resnet18
+seed: 123
+train:
+  adv_beta: 6.0
+  adv_method: mart
+  epochs: 16
+  grad_clip: 1.0
+  lr: 0.001
+  optimizer: adam
+  save_path: artifacts/dermamnist_mart_diff_kendall.pt
+  warmup_epochs: 0
+  weight_decay: 0.0001

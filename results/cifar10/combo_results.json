@@ -1,0 +1,44 @@
+{
+  "at+cosine+diff_kendall": {
+    "top_k": 0.69966,
+    "kendall_tau": 0.7304927204847336,
+    "spearman_rho": 0.8769581632912159,
+    "cosine_sim": 0.9138406105339527,
+    "pearson": 0.9137452983856201
+  },
+  "at+cosine+soft_spearman": {
+    "top_k": 0.6898,
+    "kendall_tau": 0.7247225660085678,
+    "spearman_rho": 0.873253225237131,
+    "cosine_sim": 0.9104275537133217,
+    "pearson": 0.9103832223415373
+  },
+  "trades+cosine+diff_kendall": {
+    "top_k": 0.73441,
+    "kendall_tau": 0.7829854916930199,
+    "spearman_rho": 0.9156937589049339,
+    "cosine_sim": 0.9400487965345382,
+    "pearson": 0.9399610261321067
+  },
+  "trades+cosine+soft_spearman": {
+    "top_k": 0.71139,
+    "kendall_tau": 0.7390310313105584,
+    "spearman_rho": 0.8847435783147812,
+    "cosine_sim": 0.9171210750341416,
+    "pearson": 0.9168837007880211
+  },
+  "mart+cosine+diff_kendall": {
+    "top_k": 0.68532,
+    "kendall_tau": 0.7037235045433045,
+    "spearman_rho": 0.8516280320882798,
+    "cosine_sim": 0.8991510394215585,
+    "pearson": 0.8988612357378006
+  },
+  "mart+cosine+soft_spearman": {
+    "top_k": 0.6910499999999999,
+    "kendall_tau": 0.711982202231884,
+    "spearman_rho": 0.8574642951190471,
+    "cosine_sim": 0.9050066273808479,
+    "pearson": 0.904788548052311
+  }
+}

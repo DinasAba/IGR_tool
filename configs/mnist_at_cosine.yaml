@@ -1,0 +1,54 @@
+# AT + Cosine IGR on MNIST  (paper baseline, optimized)
+seed: 123
+
+data:
+  name: mnist
+  batch_size: 64
+  num_workers: 2
+
+model:
+  name: mnist_cnn
+
+train:
+  epochs: 10
+  lr: 0.0001
+  optimizer: adam
+  weight_decay: 0.0
+  adv_method: at            # AT: CE(f(x_adv), y)
+  adv_beta: 6.0
+  save_path: "artifacts/mnist_at_cosine.pt"
+
+# PGD attack during TRAINING (fast, no IG per step)
+attack:
+  eps: 0.3
+  steps: 3                  # 3 PGD steps (vs 7-10 for eval)
+  step_size: 0.01
+
+# Attribution regularizer
+igr:
+  enabled: true
+  regularizer: cosine       # cosine | pearson | diff_kendall | soft_spearman
+  lambda_igr: 1.0
+  ig_steps: 3               # IG interpolation steps during training (fast)
+  use_abs_attr: false
+
+# Evaluation settings
+eval:
+  n_samples: 200
+  only_correct: true
+  ig_steps: 50              # high-precision IG for evaluation
+  attack:
+    eps: 0.3
+    steps: 200
+    step_size: 0.01
+    restarts: 5
+    k: 100
+    cls_weight: 1.0
+    proxy: cosine            # cosine | soft_topk
+    ig_steps_attack: 5
+
+metrics:
+  kendall_pairs: 10000
+
+amp:
+  enabled: false             # set true if GPU supports mixed precision

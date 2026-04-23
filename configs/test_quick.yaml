@@ -1,0 +1,51 @@
+# Quick test: 1 epoch AT+Cosine on MNIST (verify GPU works)
+seed: 42
+
+data:
+  name: mnist
+  batch_size: 128
+  num_workers: 0
+
+model:
+  name: mnist_cnn
+
+train:
+  epochs: 1
+  lr: 0.001
+  optimizer: adam
+  weight_decay: 0.0
+  adv_method: at
+  adv_beta: 6.0
+  save_path: "artifacts/test_quick.pt"
+
+attack:
+  eps: 0.3
+  steps: 2
+  step_size: 0.01
+
+igr:
+  enabled: true
+  regularizer: cosine
+  lambda_igr: 1.0
+  ig_steps: 2
+  use_abs_attr: false
+
+eval:
+  n_samples: 10
+  only_correct: true
+  ig_steps: 10
+  attack:
+    eps: 0.3
+    steps: 10
+    step_size: 0.02
+    restarts: 1
+    k: 100
+    cls_weight: 1.0
+    proxy: cosine
+    ig_steps_attack: 3
+
+metrics:
+  kendall_pairs: 2000
+
+amp:
+  enabled: false

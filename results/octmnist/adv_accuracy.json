@@ -1,0 +1,98 @@
+{
+  "none": {
+    "natural": 0.778,
+    "fgsm": 0.076,
+    "pgd20": 0.0,
+    "cw_inf": 0.0
+  },
+  "at": {
+    "natural": 0.667,
+    "fgsm": 0.441,
+    "pgd20": 0.299,
+    "cw_inf": 0.291
+  },
+  "at+cosine": {
+    "natural": 0.665,
+    "fgsm": 0.395,
+    "pgd20": 0.275,
+    "cw_inf": 0.272
+  },
+  "at+diff_kendall": {
+    "natural": 0.666,
+    "fgsm": 0.423,
+    "pgd20": 0.257,
+    "cw_inf": 0.246
+  },
+  "at+soft_spearman": {
+    "natural": 0.67,
+    "fgsm": 0.399,
+    "pgd20": 0.273,
+    "cw_inf": 0.253
+  },
+  "at+pearson": {
+    "natural": 0.664,
+    "fgsm": 0.396,
+    "pgd20": 0.27,
+    "cw_inf": 0.259
+  },
+  "trades": {
+    "natural": 0.504,
+    "fgsm": 0.356,
+    "pgd20": 0.318,
+    "cw_inf": 0.314
+  },
+  "trades+cosine": {
+    "natural": 0.51,
+    "fgsm": 0.356,
+    "pgd20": 0.318,
+    "cw_inf": 0.315
+  },
+  "trades+diff_kendall": {
+    "natural": 0.478,
+    "fgsm": 0.33,
+    "pgd20": 0.3,
+    "cw_inf": 0.297
+  },
+  "trades+soft_spearman": {
+    "natural": 0.474,
+    "fgsm": 0.327,
+    "pgd20": 0.305,
+    "cw_inf": 0.299
+  },
+  "trades+pearson": {
+    "natural": 0.482,
+    "fgsm": 0.337,
+    "pgd20": 0.305,
+    "cw_inf": 0.299
+  },
+  "mart": {
+    "natural": 0.719,
+    "fgsm": 0.499,
+    "pgd20": 0.242,
+    "cw_inf": 0.177
+  },
+  "mart+cosine": {
+    "natural": 0.678,
+    "fgsm": 0.416,
+    "pgd20": 0.277,
+    "cw_inf": 0.224
+  },
+  "mart+diff_kendall": {
+    "natural": 0.714,
+    "fgsm": 0.402,
+    "pgd20": 0.26,
+    "cw_inf": 0.251
+  },
+  "mart+soft_spearman": {
+    "natural": 0.661,
+    "fgsm": 0.418,
+    "pgd20": 0.289,
+    "cw_inf": 0.264
+  },
+  "mart+pearson": {
+    "natural": 0.707,
+    "fgsm": 0.405,
+    "pgd20": 0.217,
+    "cw_inf": 0.184
+  }
+}

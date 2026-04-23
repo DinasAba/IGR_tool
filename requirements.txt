@@ -1,0 +1,23 @@
+# Core dependencies (required for training and evaluation)
+# Pinned to versions used in the bachelor thesis experiments.
+torch==2.10.0
+torchvision==0.25.0
+numpy==2.4.2
+PyYAML==6.0.3
+tqdm==4.67.3
+pillow==12.1.1
+
+# Dashboard (Streamlit UI) - required for dashboard.py
+streamlit>=1.28
+pandas>=2.0
+plotly>=5.15
+
+# MedMNIST datasets (DermaMNIST, OCTMNIST, PneumoniaMNIST, RetinaMNIST)
+# Only needed if training/evaluating on those datasets.
+medmnist>=3.0
+
+# Visualization (src/visualize_ig.py)
+matplotlib>=3.7
+
+# Testing
+pytest>=7.0

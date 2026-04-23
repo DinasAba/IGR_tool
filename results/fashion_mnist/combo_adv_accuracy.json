@@ -1,0 +1,38 @@
+{
+  "at+cosine+diff_kendall": {
+    "natural": 0.8943,
+    "fgsm": 0.556,
+    "pgd20": 0.5177,
+    "cw_inf": 0.5048
+  },
+  "at+cosine+soft_spearman": {
+    "natural": 0.8948,
+    "fgsm": 0.633,
+    "pgd20": 0.5313,
+    "cw_inf": 0.5117
+  },
+  "trades+cosine+diff_kendall": {
+    "natural": 0.8471,
+    "fgsm": 0.5337,
+    "pgd20": 0.6329,
+    "cw_inf": 0.6287
+  },
+  "trades+cosine+soft_spearman": {
+    "natural": 0.847,
+    "fgsm": 0.4704,
+    "pgd20": 0.585,
+    "cw_inf": 0.5775
+  },
+  "mart+cosine+diff_kendall": {
+    "natural": 0.8891,
+    "fgsm": 0.43,
+    "pgd20": 0.4663,
+    "cw_inf": 0.3615
+  },
+  "mart+cosine+soft_spearman": {
+    "natural": 0.8924,
+    "fgsm": 0.5541,
+    "pgd20": 0.4424,
+    "cw_inf": 0.3457
+  }
+}
